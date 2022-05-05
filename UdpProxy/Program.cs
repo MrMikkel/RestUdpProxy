@@ -5,6 +5,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Text.Json;
 using System.Diagnostics;
+using System.Threading;
 
 namespace UdpProxy
 {
@@ -37,6 +38,8 @@ namespace UdpProxy
                         HttpContent content = new StringContent(stringData, Encoding.UTF8, "application/json");
 
                         client.PostAsync(URL, content);
+                        Thread.Sleep(10000);
+
                     }
                 }
 
