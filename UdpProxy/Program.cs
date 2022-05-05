@@ -43,7 +43,7 @@ namespace UdpProxy
 
                         //HttpContent content = new StringContent(stringData, Encoding.UTF8, "application/json");
 
-                        var response = await client.PostAsJsonAsync(URL, movement);
+                        await client.PostAsJsonAsync(URL, movement);
                         //Post(content);
                         //client.PostAsync(URL, content);
                         //Thread.Sleep(1000);
