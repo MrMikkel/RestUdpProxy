@@ -30,23 +30,32 @@ namespace UdpProxy
 
                 using (HttpClient client = new HttpClient())
                 {
+                    DateTime timestamp = DateTime.MinValue;
+
                     while (true)
                     {
                         IPEndPoint from = null;
 
                         byte[] data = socket.Receive(ref from);
+                        Console.WriteLine((DateTime.Now - timestamp).TotalMilliseconds);
+                        if ((DateTime.Now-timestamp).TotalMilliseconds>2000)
+                        {
+                            string stringData = Encoding.UTF8.GetString(data);
 
-                        string stringData = Encoding.UTF8.GetString(data);
+                            Movement movement = new Movement(stringData, DateTime.UtcNow);
+                            Console.WriteLine("Server received: " + stringData + " From " + from.Address);
 
-                        Movement movement = new Movement(stringData, DateTime.Now);
-                        Console.WriteLine("Server received: " + stringData + " From " + from.Address);
+                            //HttpContent content = new StringContent(stringData, Encoding.UTF8, "application/json");
 
-                        //HttpContent content = new StringContent(stringData, Encoding.UTF8, "application/json");
+                            await client.PostAsJsonAsync(URL, movement);
 
-                        await client.PostAsJsonAsync(URL, movement);
-                        //Post(content);
-                        //client.PostAsync(URL, content);
-                        //Thread.Sleep(1000);
+                            timestamp = DateTime.Now;
+                            //Console.WriteLine(response.Content.ReadAsStringAsync().Result);
+                            //Post(content);
+                            //client.PostAsync(URL, content);
+                            //Thread.Sleep(1000);
+                        }
+
 
                     }
                 }
