@@ -13,7 +13,7 @@ namespace UdpProxy
 {
     class Program
     {
-        private static string URL = "https://restexcuses.azurewebsites.net/api/Movement";
+        private static string URL = "https://restexcuses.azurewebsites.net/api/Movements";
 
         //public static async void Post(HttpContent post)
         //{
@@ -47,10 +47,11 @@ namespace UdpProxy
 
                             //HttpContent content = new StringContent(stringData, Encoding.UTF8, "application/json");
 
+                            /*HttpResponseMessage response = */
                             await client.PostAsJsonAsync(URL, movement);
 
                             timestamp = DateTime.Now;
-                            //Console.WriteLine(response.Content.ReadAsStringAsync().Result);
+                            //Console.WriteLine(response.Content.ReadAsStringAsync().Result.Length);
                             //Post(content);
                             //client.PostAsync(URL, content);
                             //Thread.Sleep(1000);
